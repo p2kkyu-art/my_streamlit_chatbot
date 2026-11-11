@@ -9,8 +9,13 @@ from pathlib import Path
 from typing import Literal, TypedDict
 
 import streamlit as st
-from dotenv import load_dotenv
 from openai import OpenAI, OpenAIError
+
+try:
+    from dotenv import load_dotenv
+except ImportError:  # Render에 패키지가 없어도 환경 변수만으로 동작합니다.
+    def load_dotenv(*_args: object, **_kwargs: object) -> bool:
+        return False
 
 ENV_PATH = Path(r"C:\env\.env")
 MODEL = "gpt-4o-mini"
@@ -58,7 +63,7 @@ st.caption(f"모델 {MODEL}")
 api_key = load_api_key()
 if api_key is None:
     st.error(
-        f"{ENV_PATH} 파일에서 OPENAI_API_KEY 환경 변수를 찾지 못했습니다.",
+        "OPENAI_API_KEY가 없습니다. 로컬은 C:\\env\\.env, Render는 Environment에 넣어 주세요.",
         title="API 키 없음",
     )
     st.stop()
