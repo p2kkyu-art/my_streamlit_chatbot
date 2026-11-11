@@ -9,10 +9,10 @@ from pathlib import Path
 from typing import Literal, TypedDict
 
 import streamlit as st
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 from openai import OpenAI, OpenAIError
 
-# ENV_PATH = Path(r"C:\env\.env")
+ENV_PATH = Path(r"C:\env\.env")
 MODEL = "gpt-4o-mini"
 INSTRUCTIONS = "You are a helpful assistant. Reply in the same language as the user."
 
@@ -24,7 +24,7 @@ class ChatMessage(TypedDict):
 
 def load_api_key() -> str | None:
     """C:\\env\\.env 에서 OPENAI_API_KEY 를 읽습니다."""
-    # load_dotenv(ENV_PATH)
+    load_dotenv(ENV_PATH)
     api_key = os.getenv("OPENAI_API_KEY", "").strip()
     return api_key or None
 
